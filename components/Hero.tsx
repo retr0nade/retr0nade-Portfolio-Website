@@ -120,33 +120,8 @@ const Hero: React.FC = () => {
         },
     };
 
-    // SVG data URL for a subtle grain texture
-    const grainTexture = `url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")`;
-
     return (
-        <section id="hero" className="min-h-screen flex flex-col justify-end items-center relative text-center px-4 pb-20 overflow-hidden bg-white">
-            <div className="absolute inset-0 z-0">
-                <motion.div
-                    className="w-full h-full"
-                    initial={{ opacity: 0, scale: 1.2 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ delay: 0.1, duration: 1.8, ease: [0.2, 0.67, 0.42, 0.96] }}
-                    style={{
-                        backgroundImage: `
-                            radial-gradient(circle at -10% -10%, rgba(255, 230, 100, 0.8) 0%, transparent 35%),
-                            repeating-conic-gradient(from 45deg at -10% -10%, #FFD700 0deg 7.2deg, transparent 9deg 27deg)
-                        `,
-                         backgroundBlendMode: 'multiply',
-                    }}
-                />
-                <div 
-                    className="absolute inset-0 pointer-events-none opacity-[0.15]"
-                    style={{
-                        backgroundImage: grainTexture,
-                        backgroundSize: '300px 300px',
-                    }}
-                />
-            </div>
+        <section id="hero" className="min-h-screen flex flex-col justify-end items-center text-center px-4 pb-20 bg-sunburst">
             
             <div className="z-10 relative flex flex-col items-center">
                  <motion.div
