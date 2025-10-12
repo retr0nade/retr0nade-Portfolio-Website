@@ -53,28 +53,49 @@ const Letter: React.FC<{ char: string; imgUrl: string; isEasterEgg?: boolean }> 
 
 
 const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
-    const letters = text.split('');
-    const imageUrls = [
-        'https://framerusercontent.com/images/uIaN9OqMe04pv18mkHBrSus3C0.png',
+    const [firstName, lastName] = text.split(' ');
+
+    const graffitiS = 'https://framerusercontent.com/images/xRYXNkQs0bYxhH3KIB5zB38uZRc.png';
+    const graffitiD = 'https://framerusercontent.com/images/uIaN9OqMe04pv18mkHBrSus3C0.png';
+
+    const otherImageUrls = [
         'https://framerusercontent.com/images/epYmEFUkGf5RAdraSFF73cFeg.png',
         'https://framerusercontent.com/images/3QcsA8TTMQXfdzHVxQGhRs9XeUM.png',
         'https://framerusercontent.com/images/rAx5p19XPwQrmLQaEWqjUnrNsG0.png',
         'https://framerusercontent.com/images/afh8DWz3dwODa0l2jxClrH96As.png',
-        'https://framerusercontent.com/images/dXC5qH45pIUuYOr6asR5s01IhM.png',
-        'https://framerusercontent.com/images/xRYXNkQs0bYxhH3KIB5zB38uZRc.png',
         'https://framerusercontent.com/images/V4DUk7cvcCqHYJwM5pZ1k6zI7W4.png',
         'https://framerusercontent.com/images/v5w76QJX6Tp5pJ0pVU7wpDuqqtg.png',
-        'https://framerusercontent.com/images/uIaN9OqMe04pv18mkHBrSus3C0.png',
     ];
 
-    return (
+    const getImageUrl = (char: string, index: number, word: string) => {
+        if (word === firstName) {
+            if (char === 'S' && index === 0) return graffitiS;
+            if (char === 'S' && index === firstName.length - 1) return graffitiS;
+        }
+        if (word === lastName) {
+            if (char === 'D' && index === 0) return graffitiD;
+        }
+        return otherImageUrls[(char.charCodeAt(0) + index) % otherImageUrls.length];
+    }
+
+    const renderWord = (word: string) => (
         <h1 className="font-black text-[18vw] md:text-[14vw] lg:text-[12vw] xl:text-[200px] leading-[0.9] tracking-tighter uppercase text-center font-['Reddit_Sans_Condensed'] text-black select-none">
-            {letters.map((char, index) => 
-                char === ' ' 
-                ? <span key={index}> </span> 
-                : <Letter key={index} char={char} imgUrl={imageUrls[index % imageUrls.length]} isEasterEgg={char === 'R'} />
+            {word.split('').map((char, index) => 
+                <Letter 
+                    key={`${word}-${index}`} 
+                    char={char} 
+                    imgUrl={getImageUrl(char, index, word)}
+                    isEasterEgg={word === firstName && char === 'R'} 
+                />
             )}
         </h1>
+    );
+
+    return (
+        <div>
+            {renderWord(firstName)}
+            {renderWord(lastName)}
+        </div>
     );
 };
 
@@ -105,35 +126,53 @@ const Hero: React.FC = () => {
     return (
         <section id="hero" className="min-h-screen flex flex-col justify-center items-center relative text-center px-4 overflow-hidden">
              <motion.div
-                className="absolute inset-0 z-0 opacity-30"
+                className="absolute inset-0 z-0"
                 initial={{ y: -200, rotate: -8, opacity: 0 }}
-                animate={{ y: -300, rotate: -8, opacity: 0.3 }}
+                animate={{ y: -300, rotate: -8, opacity: 1 }}
                 transition={{ delay: 0.1, duration: 1.8, ease: [0.2, 0.67, 0.42, 0.96] }}
             >
-                <img
-                    src="https://framerusercontent.com/images/HTKvkUGiTrV9Bi4p3psUUrOY.png"
-                    alt="background gradient"
-                    className="w-full h-full object-cover mix-blend-soft-light"
+                <div 
+                    className="w-full h-full"
+                    style={{
+                        backgroundImage: 'radial-gradient(circle at top left, #ffefa0, #ffd700, #ffc300, #ffaa00, #ff8c00 40%, transparent 70%), radial-gradient(circle at top right, #ffefa0, #ffd700, #ffc300, #ffaa00, #ff8c00 30%, transparent 60%)',
+                        mixBlendMode: 'soft-light',
+                        filter: 'url(#grain)',
+                    }}
                 />
+                 <svg width="0" height="0">
+                    <filter id="grain">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
+                        <feColorMatrix type="saturate" values="0"/>
+                        <feComponentTransfer>
+                            <feFuncA type="table" tableValues="0 0.15 0"/>
+                        </feComponentTransfer>
+                    </filter>
+                </svg>
             </motion.div>
             
             <div className="z-10 relative flex flex-col items-center">
-                <AnimatedText text="SHREYAS DEB" />
-
-                <motion.div
-                    className="mt-8 text-black/50 text-xl md:text-2xl font-['Inter_Display']"
+                 <motion.div
+                    className="mb-8 text-black/50 text-xl md:text-2xl font-['Inter_Display'] text-left max-w-md"
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
                 >
-                    <motion.p variants={itemVariants}>Top-tier Web and Product Design partner for</motion.p>
-                    <motion.p variants={itemVariants}>AI, SaaS, and Emerging Tech.</motion.p>
+                    <motion.p variants={itemVariants}>Howdy! Meet your trusted design partner,</motion.p>
+                    <motion.p variants={itemVariants}>crafting strong brands for SaaS and Web3.</motion.p>
                 </motion.div>
+
+                <AnimatedText text="SHREYAS DEB" />
+
             </div>
             
-            <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-black/50 font-['Inter_Display']">
+            <motion.div 
+                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-black/50 font-['Inter_Display']"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 1.5, duration: 1 }}
+            >
                 <p>Scroll down</p>
-            </div>
+            </motion.div>
         </section>
     );
 };
