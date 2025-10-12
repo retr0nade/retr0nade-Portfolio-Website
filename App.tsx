@@ -9,7 +9,7 @@ import Connect from './components/Connect';
 import Footer from './components/Footer';
 
 const App: React.FC = () => {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [mousePosition, setMousePosition] = useState({ x: -100, y: -100 });
   const [cursorVariant, setCursorVariant] = useState('default');
 
   useEffect(() => {
@@ -43,8 +43,19 @@ const App: React.FC = () => {
     },
   };
 
-  const textEnter = () => setCursorVariant('text');
-  const textLeave = () => setCursorVariant('default');
+  const handleMouseEnter = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+    if (target.closest('a, button, h1, h2, h3, p, [role="button"]')) {
+      setCursorVariant('text');
+    }
+  };
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLElement>) => {
+    const target = e.target as HTMLElement;
+     if (target.closest('a, button, h1, h2, h3, p, [role="button"]')) {
+      setCursorVariant('default');
+    }
+  };
 
   return (
     <div className="bg-white text-black antialiased relative">
@@ -52,17 +63,10 @@ const App: React.FC = () => {
         className="fixed top-0 left-0 rounded-full z-[9999] pointer-events-none hidden md:block"
         variants={variants}
         animate={cursorVariant}
-        transition={{ type: 'spring', stiffness: 500, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 500, damping: 30, mass: 0.5 }}
       />
       
-      <main onMouseOver={(e) => {
-          const target = e.target as HTMLElement;
-          if (target.tagName === 'P' || target.tagName === 'H1' || target.tagName === 'H2' || target.tagName === 'A' || target.tagName === 'BUTTON' || target.closest('a') || target.closest('button')) {
-              textEnter();
-          } else {
-              textLeave();
-          }
-      }} onMouseLeave={textLeave}>
+      <main onMouseOver={handleMouseEnter} onMouseOut={handleMouseLeave}>
         <Header />
         <Hero />
         <Works />
