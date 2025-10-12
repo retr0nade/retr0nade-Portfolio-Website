@@ -75,30 +75,43 @@
       }
     </style>
 
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-    "react/jsx-dev-runtime": "https://esm.sh/react@18.3.1/jsx-dev-runtime",
-    "react-dom": "https://esm.sh/react-dom@18.3.1",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "framer-motion": "https://esm.sh/framer-motion@10.16.2?deps=react,react-dom"
-  },
-  "scopes": {
-    "https://aistudiocdn.com/": {
-      "react": "https://esm.sh/react@18.3.1",
-      "react-dom": "https://esm.sh/react-dom@18.3.1",
-      "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-      "react/jsx-dev-runtime": "https://esm.sh/react@18.3.1/jsx-dev-runtime"
-    }
+<script>
+const forceEsmReact = {
+  "react": "https://esm.sh/react@18.3.1",
+  "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+  "react/jsx-dev-runtime": "https://esm.sh/react@18.3.1/jsx-dev-runtime",
+  "react-dom": "https://esm.sh/react-dom@18.3.1",
+  "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+  "framer-motion": "https://esm.sh/framer-motion@10.16.2?deps=react,react-dom"
+};
+
+(async () => {
+  // Wait for AI Studio to inject, then override.
+  await new Promise(r => setTimeout(r, 100));
+  const mapScript = document.querySelector('script[type="importmap"]');
+  if (mapScript) {
+    mapScript.textContent = JSON.stringify({ imports: forceEsmReact });
+    console.log("%c✅ Import map reset to esm.sh only", "color:limegreen;font-weight:bold");
   }
-}
+})();
 </script>
 
 
 
-  </head>
+
+
+  <link rel="stylesheet" href="/index.css">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
+  }
+}
+</script>
+</head>
 
   <body>
     <div id="root"></div>
