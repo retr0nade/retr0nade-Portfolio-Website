@@ -64,7 +64,6 @@ const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
         'https://framerusercontent.com/images/rAx5p19XPwQrmLQaEWqjUnrNsG0.png',
         'https://framerusercontent.com/images/afh8DWz3dwODa0l2jxClrH96As.png',
         'https://framerusercontent.com/images/V4DUk7cvcCqHYJwM5pZ1k6zI7W4.png',
-        'https://framerusercontent.com/images/v5w76QJX6Tp5pJ0pVU7wpDuqqtg.png',
     ];
 
     const getImageUrl = (char: string, index: number, word: string) => {
@@ -101,8 +100,6 @@ const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
 
 
 const Hero: React.FC = () => {
-    // FIX: Explicitly using the Variants type tells TypeScript that properties like
-    // `ease: 'easeOut'` are valid, not just generic strings, resolving the error.
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -124,25 +121,24 @@ const Hero: React.FC = () => {
     };
 
     return (
-        <section id="hero" className="min-h-screen flex flex-col justify-center items-center relative text-center px-4 overflow-hidden">
+        <section id="hero" className="min-h-screen flex flex-col justify-end items-center relative text-center px-4 pb-20 overflow-hidden bg-white">
              <motion.div
                 className="absolute inset-0 z-0"
-                initial={{ y: -200, rotate: -8, opacity: 0 }}
-                animate={{ y: -300, rotate: -8, opacity: 1 }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
                 transition={{ delay: 0.1, duration: 1.8, ease: [0.2, 0.67, 0.42, 0.96] }}
             >
                 <div 
                     className="w-full h-full"
                     style={{
-                        backgroundImage: 'radial-gradient(circle at top left, #ffefa0, #ffd700, #ffc300, #ffaa00, #ff8c00 40%, transparent 70%), radial-gradient(circle at top right, #ffefa0, #ffd700, #ffc300, #ffaa00, #ff8c00 30%, transparent 60%)',
-                        mixBlendMode: 'soft-light',
+                        backgroundImage: 'repeating-conic-gradient(from 45deg at -10% -10%, transparent 0%, #FFD700 4%, transparent 15%)',
+                        opacity: 0.8,
                         filter: 'url(#grain)',
                     }}
                 />
-                 <svg width="0" height="0">
+                 <svg className="absolute w-0 h-0">
                     <filter id="grain">
                         <feTurbulence type="fractalNoise" baseFrequency="0.65" numOctaves="3" stitchTiles="stitch"/>
-                        <feColorMatrix type="saturate" values="0"/>
                         <feComponentTransfer>
                             <feFuncA type="table" tableValues="0 0.15 0"/>
                         </feComponentTransfer>
