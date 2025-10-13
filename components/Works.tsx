@@ -1,5 +1,5 @@
-import React, { useMemo, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useMemo } from 'react';
+import { motion } from 'framer-motion';
 
 interface Project {
   id: string;
@@ -9,82 +9,68 @@ interface Project {
   width: string;
   top: string;
   left: string;
-  transformRange: [number, number];
 }
 
 const projects: Project[] = [
-    { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: '/assets/work/cerebro.png', width: '56%', top: '5%', left: '70%', transformRange: [0, 0.15] },
-    { id: 'p2', title: 'BetterMaps', description: 'Optimized Google Maps', imageUrl: '/assets/work/bettermaps.png', width: '32%', top: '25%', left: '19%', transformRange: [0.1, 0.3] },
-    { id: 'p3', title: 'Abdominal Organ Segmentation', description: 'Machine Learning on medical datset using MONAI', imageUrl: '/assets/work/AOS.png', width: '32%', top: '35%', left: '79%', transformRange: [0.2, 0.4] },
-    { id: 'p4', title: 'Marketting Analytics', description: 'Trends, Graphs, Charts', imageUrl: '/assets/work/market_analytics.png', width: '55%', top: '50%', left: '28%', transformRange: [0.35, 0.55] },
-    { id: 'p5', title: 'DBMS.AI', description: 'Chatbot for DBMS', imageUrl: '/assets/work/dbms-ai.png', width: '55%', top: '65%', left: '78%', transformRange: [0.5, 0.7] },
-    { id: 'p6', title: 'AlgoViz', description: 'DSA Algorithm Visualizer', imageUrl: '/assets/work/dsa.png', width: '32%', top: '80%', left: '23%', transformRange: [0.65, 0.85] },
+  { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: '/assets/work/cerebro.png', width: '55%', top: '-5%', left: '45%' },
+  { id: 'p2', title: 'BetterMaps', description: 'Optimized Google Maps', imageUrl: '/assets/work/bettermaps.png', width: '45%', top: '30%', left: '-5%' },
+  { id: 'p3', title: 'Abdominal Organ Segmentation', description: 'Machine Learning on medical dataset using MONAI', imageUrl: '/assets/work/AOS.png', width: '50%', top: '45%', left: '55%' },
+  { id: 'p4', title: 'Marketing Analytics', description: 'Trends, Graphs, Charts', imageUrl: '/assets/work/market_analytics.png', width: '55%', top: '80%', left: '-6.5%' },
+  { id: 'p5', title: 'AlgoViz', description: 'DSA Algorithm Visualizer', imageUrl: '/assets/work/dsa.png', width: '45%', top: '95%', left: '57%' },
+  { id: 'p6', title: 'DBMS.AI', description: 'Chatbot for DBMS', imageUrl: '/assets/work/dbms-ai.png', width: '60%', top: '127%', left: '-5%' }, 
 ];
 
-const ProjectCard: React.FC<{ project: Project; scrollYProgress: any }> = ({ project, scrollYProgress }) => {
-    const y = useTransform(scrollYProgress, project.transformRange, ['100px', '-100px']);
-    const opacity = useTransform(scrollYProgress, [project.transformRange[0] - 0.05, project.transformRange[0], project.transformRange[1], project.transformRange[1] + 0.05], [0, 1, 1, 0]);
-
-    // Calculate the random rotation only ONCE and store it.
-    const randomRotation = useMemo(() => Math.random() * 4 - 2, []);
-
-    return (
-        <motion.div
-            style={{ 
-                position: 'absolute', 
-                width: project.width, 
-                top: project.top, 
-                left: project.left,
-                translateX: '-50%',
-                y,
-                opacity
-            }}
-            className="group"
-        >
-            <div className="relative transform-gpu transition-transform duration-500 ease-out group-hover:scale-105">
-                <motion.div 
-                    className="shadow-2xl rounded-2xl md:rounded-3xl p-1 bg-white border-4 border-white"
-                    // Use the stored random value instead of calculating it here
-                    style={{ rotate: randomRotation }}
-                >
-                    <img src={project.imageUrl} alt={project.title} className="w-full h-auto rounded-xl md:rounded-2xl" />
-                </motion.div>
-                <div className="mt-4">
-                    <h3 className="text-xl md:text-3xl font-medium font-['Inter_Display']">{project.title}</h3>
-                    <p className="text-base md:text-lg text-black/50 font-['Inter_Display']">{project.description}</p>
-                </div>
-            </div>
-        </motion.div>
-    );
-};
-
-
 const Works: React.FC = () => {
-    const containerRef = useRef<HTMLDivElement>(null);
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ['start start', 'end end']
-    });
+  return (
+    <section id="works" className="content-section relative min-h-[300vh] py-24 overflow-hidden bg-[#fffbea]">
+      <div className="max-w-7xl mx-auto px-4 text-center mb-24">
+        <h2 className="font-black text-6xl md:text-8xl tracking-tighter uppercase font-['Reddit_Sans_Condensed']">
+          My latest work
+        </h2>
+        <p className="font-['Caveat'] text-2xl md:text-3xl text-black/40 transform rotate-2 inline-block -mt-2">
+          from 2020 'til today
+        </p>
+      </div>
 
-    return (
-        <section id="works" className="content-section">
-            <div className="max-w-7xl mx-auto px-4 text-center mb-16">
-                <h2 className="font-black text-6xl md:text-8xl tracking-tighter uppercase font-['Reddit_Sans_Condensed']">
-                    My latest work
-                </h2>
-                <p className="font-['Caveat'] text-2xl md:text-3xl text-black/40 transform rotate-2 inline-block -mt-2">from 2020 'til today</p>
-            </div>
-            <div ref={containerRef} className="relative h-[300vh] md:h-[400vh]">
-                <div className="sticky top-0 h-screen overflow-hidden">
-                    <div className="relative w-full h-full max-w-6xl mx-auto">
-                        {projects.map(project => (
-                            <ProjectCard key={project.id} project={project} scrollYProgress={scrollYProgress} />
-                        ))}
-                    </div>
-                </div>
-            </div>
-        </section>
-    );
+      <div className="relative w-full max-w-7xl mx-auto h-[150vh]">
+        {projects.map((project) => {
+          const randomRotation = useMemo(() => Math.random() * 4 - 2, []);
+          return (
+            <motion.div
+              key={project.id}
+              style={{
+                position: 'absolute',
+                width: project.width,
+                top: project.top,
+                left: project.left,
+                rotate: randomRotation,
+              }}
+              whileHover={{ rotate: 0, scale: 1.03, zIndex: 10 }}
+              transition={{ type: 'spring', stiffness: 200, damping: 12 }}
+              className="group"
+            >
+              <div className="shadow-2xl rounded-2xl md:rounded-3xl p-1 bg-white border-4 border-white transition-all">
+                <img
+                  src={project.imageUrl}
+                  alt={project.title}
+                  className="w-full h-auto rounded-xl md:rounded-2xl"
+                />
+              </div>
+              <div className="mt-4 text-left">
+                <h3 className="text-xl md:text-2xl font-semibold font-['Inter_Display'] flex items-center gap-2">
+                  {project.title}
+                  <span className="opacity-50 group-hover:translate-x-1 transition-transform">→</span>
+                </h3>
+                <p className="text-base md:text-lg text-black/50 font-['Inter_Display']">
+                  {project.description}
+                </p>
+              </div>
+            </motion.div>
+          );
+        })}
+      </div>
+    </section>
+  );
 };
 
 export default Works;
