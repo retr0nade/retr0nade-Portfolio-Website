@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SHREYAS DEB | Product & Web Design</title>
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter+Tight:wght@500&display=swap" rel="stylesheet">
+
+    <style data-framer-font-css="">
+      @font-face {
+        font-family: "Reddit Sans Condensed";
+        src: url("https://fonts.gstatic.com/s/redditsanscondensed/v5/m8J_jepOc6WYkkm2Dey9A5QGAQXmuL3va5IfZsq2gyKtWVJro_ANUpA4u7XDIuc.woff2");
+        font-display: block;
+        font-style: normal;
+        font-weight: 900;
+      }
+      @font-face {
+        font-family: "Inter Display";
+        src: url("https://framerusercontent.com/assets/iwWTDc49ENF2tCHbqlNARXw6Ug.woff2");
+        font-display: swap;
+        font-style: normal;
+        font-weight: 500;
+      }
+    </style>
+
+<!-- === Daniel Sun-level Sunburst Styling === -->
+<style>
+  :root {
+    /* A slightly off-white background to make the yellow pop more */
+    --bg: #fffdf5; 
+  }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* HERO CONTAINER */
+  .hero {
+    position: relative;
+    width: 100%;
+    /* Set a min-height for the effect to be visible on scroll */
+    min-height: 90vh; 
+    overflow: hidden;
+    isolation: isolate; 
+    background-color: var(--bg);
+  }
+  
+  /* The Content container needs to be above the sunburst */
+  .hero-content-wrapper {
+    position: sticky;
+    top: 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+  }
+
+  /* THE SUNBURST EFFECT */
+
+.sunburst {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vmax;
+  height: 70vmax;
+  transform-origin: top left;
+  
+  background-image: url("/assets/sunburst/sunburst.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: top left;  
+  /* Using a more reliable blend mode */
+  mix-blend-mode: multiply;
+  /* Adjusting filter and opacity to work with 'multiply' */
+  filter: saturate(1.5) contrast(1.1);
+  opacity: 0.75; /* 'multiply' is stronger, so we lower the opacity */
+
+  pointer-events: none;
+  z-index: 1;
+}
+
+  .hero-content {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+  }
+
+    /* THIS IS THE FIX: Moved the content-section style OUTSIDE of .sunburst */
+  .content-section {
+    position: relative;
+    z-index: 5; /* This makes sure it renders ON TOP of the sunburst */
+    background-color: var(--bg); /* This gives it a solid background */
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+</style>
+
+
+    <!-- === React Import Maps + Patches === -->
+    <script>
+      const forceEsmReact = {
+        "react": "https://esm.sh/react@18.3.1",
+        "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+        "react/jsx-dev-runtime": "https://esm.sh/react@18.3.1/jsx-dev-runtime",
+        "react-dom": "https://esm.sh/react-dom@18.3.1",
+        "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+        "framer-motion": "https://esm.sh/framer-motion@10.16.2?deps=react,react-dom"
+      };
+
+      (async () => {
+        await new Promise(r => setTimeout(r, 100));
+        const mapScript = document.querySelector('script[type="importmap"]');
+        if (mapScript) {
+          mapScript.textContent = JSON.stringify({ imports: forceEsmReact });
+          console.log("%c✅ Import map reset to esm.sh only", "color:limegreen;font-weight:bold");
+        }
+      })();
+    </script>
+
+    <link rel="stylesheet" href="/index.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
+        }
+      }
+    </script>
+  </head>
+
+  <body>
+    <div id="root"></div>
+
+    <!-- React app entry -->
+    <script type="module" src="/index.tsx"></script>    
+  </body>
+</html>

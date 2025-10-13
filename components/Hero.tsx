@@ -1,0 +1,180 @@
+import React, { useEffect, useRef } from 'react';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
+
+// ... The Letter and AnimatedText components remain unchanged ...
+
+const Letter: React.FC<{ char: string; imgUrl: string; isEasterEgg?: boolean }> = ({ char, imgUrl, isEasterEgg }) => {
+    const [isHovered, setIsHovered] = React.useState(false);
+
+    return (
+        <motion.span 
+            className="relative inline-block"
+            onHoverStart={() => setIsHovered(true)}
+            onHoverEnd={() => setIsHovered(false)}
+        >
+            {char}
+            <AnimatePresence>
+                {isHovered && (
+                    isEasterEgg ? (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.5, y: 20, rotate: -20 }}
+                            animate={{ opacity: 1, scale: 1, y: 0, rotate: -12 }}
+                            exit={{ opacity: 0, scale: 0.5, y: -20, rotate: 0 }}
+                            transition={{ type: 'spring', stiffness: 400, damping: 15 }}
+                            className="absolute inset-0 flex items-center justify-center pointer-events-none z-10"
+                        >
+                            <div className="bg-black/80 backdrop-blur-sm px-4 py-2 rounded-lg shadow-xl">
+                                <span className="text-2xl md:text-4xl font-['Caveat'] font-bold text-yellow-400 whitespace-nowrap">
+                                    retr0nade
+                                </span>
+                            </div>
+                        </motion.div>
+                    ) : (
+                        <motion.img
+                            src={imgUrl}
+                            alt=""
+                            initial={{ opacity: 0, scale: 0.5, rotate: -30 }}
+                            animate={{ opacity: 1, scale: 1, rotate: Math.random() * 20 - 10 }}
+                            exit={{ opacity: 0, scale: 0.5, rotate: 30 }}
+                            transition={{ type: 'spring', stiffness: 300, damping: 15 }}
+                            className="absolute w-full h-full object-contain top-0 left-0 pointer-events-none"
+                            style={{
+                                width: '150%',
+                                height: '150%',
+                                top: '-25%',
+                                left: '-25%',
+                            }}
+                        />
+                    )
+                )}
+            </AnimatePresence>
+        </motion.span>
+    );
+};
+
+
+const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
+    const [firstName, lastName] = text.split(' ');
+
+    const graffitiS = 'https://framerusercontent.com/images/xRYXNkQs0bYxhH3KIB5zB38uZRc.png';
+    const graffitiD = 'https://framerusercontent.com/images/uIaN9OqMe04pv18mkHBrSus3C0.png';
+
+    const otherImageUrls = [
+        'https://framerusercontent.com/images/epYmEFUkGf5RAdraSFF73cFeg.png',
+        'https://framerusercontent.com/images/3QcsA8TTMQXfdzHVxQGhRs9XeUM.png',
+        'https://framerusercontent.com/images/rAx5p19XPwQrmLQaEWqjUnrNsG0.png',
+        'https://framerusercontent.com/images/afh8DWz3dwODa0l2jxClrH96As.png',
+        'https://framerusercontent.com/images/V4DUk7cvcCqHYJwM5pZ1k6zI7W4.png',
+    ];
+
+    const getImageUrl = (char: string, index: number, word: string) => {
+        if (word === firstName) {
+            if (char === 'S' && index === 0) return graffitiS;
+            if (char === 'S' && index === firstName.length - 1) return graffitiS;
+        }
+        if (word === lastName) {
+            if (char === 'D' && index === 0) return graffitiD;
+        }
+        return otherImageUrls[(char.charCodeAt(0) + index) % otherImageUrls.length];
+    }
+
+    const renderWord = (word: string) => (
+        <h1 className="font-black text-[18vw] md:text-[14vw] lg:text-[12vw] xl:text-[200px] leading-[0.9] tracking-tighter uppercase text-center font-['Reddit_Sans_Condensed'] text-black select-none">
+            {word.split('').map((char, index) => 
+                <Letter 
+                    key={`${word}-${index}`} 
+                    char={char} 
+                    imgUrl={getImageUrl(char, index, word)}
+                    isEasterEgg={word === firstName && char === 'R'} 
+                />
+            )}
+        </h1>
+    );
+
+    return (
+        <div>
+            {renderWord(firstName)}
+            {renderWord(lastName)}
+        </div>
+    );
+};
+
+
+const Hero: React.FC = () => {
+    const sunburstRef = useRef<HTMLDivElement>(null);
+
+    const containerVariants: Variants = {
+        hidden: { opacity: 0 },
+        visible: {
+            opacity: 1,
+            transition: {
+                staggerChildren: 0.1,
+                delayChildren: 0.5,
+            },
+        },
+    };
+
+    const itemVariants: Variants = {
+        hidden: { y: 20, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: { duration: 0.5, ease: 'easeOut' },
+        },
+    };
+
+    // --- THIS IS THE UPDATED CODE ---
+    // Simplified to remove the idle animation loop.
+    useEffect(() => {
+        const handleScroll = () => {
+            if (sunburstRef.current) {
+                const scrollY = window.scrollY;
+                const scrollRotation = scrollY * -0.015;
+                sunburstRef.current.style.transform = `rotate(${scrollRotation}deg)`;
+            }
+        };
+
+        // Add the scroll listener
+        window.addEventListener('scroll', handleScroll, { passive: true });
+
+        // Clean up by removing the listener when the component is unmounted
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []); // Empty dependency array ensures this runs only once.
+
+    return (
+        <section id="hero" className="hero">
+            <div ref={sunburstRef} className="sunburst" aria-hidden="true"></div>
+            
+            <div className="hero-content-wrapper">
+                <div className="hero-content">
+                    <motion.div
+                        className="eyebrow font-['Inter_Display'] text-left max-w-md text-xl md:text-2xl"
+                        variants={containerVariants}
+                        initial="hidden"
+                        animate="visible"
+                    >
+                        <motion.p variants={itemVariants}>Howdy! Meet your trusted design partner,</motion.p>
+                        <motion.p variants={itemVariants}>
+                            crafting strong brands for AI, SaaS, and Emerging Tech.
+                        </motion.p>
+                    </motion.div>
+
+                    <AnimatedText text="SHREYAS DEB" />
+
+                    <motion.div
+                        className="cta font-['Inter_Display']"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ delay: 1.5, duration: 1 }}
+                    >
+                        <p>Scroll down</p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+    );
+};
+
+export default Hero;
