@@ -79,7 +79,7 @@ const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
     }
 
     const renderWord = (word: string) => (
-        <h1 className="font-black text-[18vw] md:text-[14vw] lg:text-[12vw] xl:text-[200px] leading-[0.9] tracking-tighter uppercase text-center font-['Reddit_Sans_Condensed'] text-black select-none">
+        <h1 className="font-black text-[18vw] md:text-[14vw] lg:text-[12vw] xl:text-[240px] leading-[0.9] tracking-tighter uppercase font-['Reddit_Sans_Condensed'] text-black select-none">
             {word.split('').map((char, index) => 
                 <Letter 
                     key={`${word}-${index}`} 
@@ -92,7 +92,7 @@ const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
     );
 
     return (
-        <div>
+        <div className="flex flex-wrap items-center gap-x-4 md:gap-x-8">
             {renderWord(firstName)}
             {renderWord(lastName)}
         </div>
@@ -150,7 +150,7 @@ const Hero: React.FC = () => {
             <div className="hero-content-wrapper">
                 <div className="hero-content">
                     <motion.div
-                        className="eyebrow font-['Inter_Display'] text-left max-w-md text-xl md:text-2xl"
+                        className="eyebrow font-['Inter_Display'] text-left max-w-md text-xl md:text-2xl font-['Reddit_Sans_Condensed'] text-gray-500"
                         variants={containerVariants}
                         initial="hidden"
                         animate="visible"

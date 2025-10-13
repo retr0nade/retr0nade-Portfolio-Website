@@ -56,14 +56,18 @@
     background-color: var(--bg);
   }
   
-  /* The Content container needs to be above the sunburst */
+    /* The Content container needs to be above the sunburst */
   .hero-content-wrapper {
     position: sticky;
     top: 0;
     min-height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    justify-content: center; /* Horizontally centers the content block */
+    
+    /* --- THIS IS THE FIX --- */
+    align-items: flex-start; /* Aligns the content block to the top */
+    padding: 50vh 2rem 0; /* Pushes it down from the top. Adjust 30vh to move it up or down. */
+
     z-index: 10;
   }
 
@@ -91,14 +95,19 @@
   z-index: 1;
 }
 
-  .hero-content {
+    .hero-content {
     position: relative;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    padding: 2rem;
+    
+    /* --- THIS IS THE FIX --- */
+    /* Align all items and text to the left */
+    align-items: flex-start;
+    text-align: left;
+
+    /* Set a max-width to control the content area */
+    width: 100%;
+    max-width: 1280px; /* Adjust this value as needed */
   }
 
     /* THIS IS THE FIX: Moved the content-section style OUTSIDE of .sunburst */
