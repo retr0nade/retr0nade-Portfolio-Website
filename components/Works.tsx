@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 interface Project {
@@ -13,17 +13,20 @@ interface Project {
 }
 
 const projects: Project[] = [
-    { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: 'https://framerusercontent.com/images/rswgGpiYFoEy9fVZhbxz01GZqW8.png', width: '56%', top: '5%', left: '70%', transformRange: [0, 0.15] },
-    { id: 'p2', title: 'Humble.AI', description: 'Sentiment-aware chatbot', imageUrl: 'https://framerusercontent.com/images/xOAD945vNzB4ZNxwOOlGFoBoI.png', width: '32%', top: '25%', left: '19%', transformRange: [0.1, 0.3] },
-    { id: 'p3', title: 'DBMS.AI', description: 'Natural-language to SQL system', imageUrl: 'https://framerusercontent.com/images/F4OUDL5iGqjO9FJhsW24INIBb1I.png', width: '32%', top: '35%', left: '79%', transformRange: [0.2, 0.4] },
-    { id: 'p4', title: 'Visionary OS', description: 'Next-gen operating system concept', imageUrl: 'https://framerusercontent.com/images/NhKxPMQ81nEv4q4pclRzztFygM.png', width: '55%', top: '50%', left: '28%', transformRange: [0.35, 0.55] },
-    { id: 'p5', title: 'QuantumLeap', description: 'Data visualization for quantum computing', imageUrl: 'https://framerusercontent.com/images/uDK4SqDaezrDJLHUNMP6J6YsG0.png', width: '55%', top: '65%', left: '78%', transformRange: [0.5, 0.7] },
-    { id: 'p6', title: 'NeuralNet', description: 'Visualizing neural network architectures', imageUrl: 'https://framerusercontent.com/images/y21PZDf5cJJ7M7LY1kjt9GpfR4.png', width: '32%', top: '80%', left: '23%', transformRange: [0.65, 0.85] },
+    { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: '/assets/work/cerebro.png', width: '56%', top: '5%', left: '70%', transformRange: [0, 0.15] },
+    { id: 'p2', title: 'BetterMaps', description: 'Optimized Google Maps', imageUrl: '/assets/work/bettermaps.png', width: '32%', top: '25%', left: '19%', transformRange: [0.1, 0.3] },
+    { id: 'p3', title: 'Abdominal Organ Segmentation', description: 'Machine Learning on medical datset using MONAI', imageUrl: '/assets/work/AOS.png', width: '32%', top: '35%', left: '79%', transformRange: [0.2, 0.4] },
+    { id: 'p4', title: 'Marketting Analytics', description: 'Trends, Graphs, Charts', imageUrl: '/assets/work/market_analytics.png', width: '55%', top: '50%', left: '28%', transformRange: [0.35, 0.55] },
+    { id: 'p5', title: 'DBMS.AI', description: 'Chatbot for DBMS', imageUrl: '/assets/work/dbms-ai.png', width: '55%', top: '65%', left: '78%', transformRange: [0.5, 0.7] },
+    { id: 'p6', title: 'AlgoViz', description: 'DSA Algorithm Visualizer', imageUrl: '/assets/work/dsa.png', width: '32%', top: '80%', left: '23%', transformRange: [0.65, 0.85] },
 ];
 
 const ProjectCard: React.FC<{ project: Project; scrollYProgress: any }> = ({ project, scrollYProgress }) => {
     const y = useTransform(scrollYProgress, project.transformRange, ['100px', '-100px']);
     const opacity = useTransform(scrollYProgress, [project.transformRange[0] - 0.05, project.transformRange[0], project.transformRange[1], project.transformRange[1] + 0.05], [0, 1, 1, 0]);
+
+    // Calculate the random rotation only ONCE and store it.
+    const randomRotation = useMemo(() => Math.random() * 4 - 2, []);
 
     return (
         <motion.div
@@ -41,7 +44,8 @@ const ProjectCard: React.FC<{ project: Project; scrollYProgress: any }> = ({ pro
             <div className="relative transform-gpu transition-transform duration-500 ease-out group-hover:scale-105">
                 <motion.div 
                     className="shadow-2xl rounded-2xl md:rounded-3xl p-1 bg-white border-4 border-white"
-                    style={{ rotate: Math.random() * 4 - 2 }}
+                    // Use the stored random value instead of calculating it here
+                    style={{ rotate: randomRotation }}
                 >
                     <img src={project.imageUrl} alt={project.title} className="w-full h-auto rounded-xl md:rounded-2xl" />
                 </motion.div>
