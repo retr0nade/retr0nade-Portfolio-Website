@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 import React, { useEffect, useRef } from 'react';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
 
 // ... The Letter and AnimatedText components remain unchanged ...
 
-=======
-import React from 'react';
-// FIX: Import Variants from framer-motion to resolve type inference issues with animation properties.
-import { motion, AnimatePresence, Variants } from 'framer-motion';
-
->>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
 const Letter: React.FC<{ char: string; imgUrl: string; isEasterEgg?: boolean }> = ({ char, imgUrl, isEasterEgg }) => {
     const [isHovered, setIsHovered] = React.useState(false);
 
@@ -108,11 +101,8 @@ const AnimatedText: React.FC<{ text: string }> = ({ text }) => {
 
 
 const Hero: React.FC = () => {
-<<<<<<< HEAD
     const sunburstRef = useRef<HTMLDivElement>(null);
 
-=======
->>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
     const containerVariants: Variants = {
         hidden: { opacity: 0 },
         visible: {
@@ -133,7 +123,6 @@ const Hero: React.FC = () => {
         },
     };
 
-<<<<<<< HEAD
     // --- THIS IS THE UPDATED CODE ---
     // Simplified to remove the idle animation loop.
     useEffect(() => {
@@ -184,34 +173,6 @@ const Hero: React.FC = () => {
                     </motion.div>
                 </div>
             </div>
-=======
-    return (
-        <section id="hero" className="min-h-screen flex flex-col justify-end items-center text-center px-4 pb-20 bg-sunburst">
-            
-            <div className="z-10 relative flex flex-col items-center">
-                 <motion.div
-                    className="mb-8 text-black/50 text-xl md:text-2xl font-['Inter_Display'] text-left max-w-md"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate="visible"
-                >
-                    <motion.p variants={itemVariants}>Howdy! Meet your trusted design partner,</motion.p>
-                    <motion.p variants={itemVariants}>crafting strong brands for AI, SaaS, and Emerging Tech.</motion.p>
-                </motion.div>
-
-                <AnimatedText text="SHREYAS DEB" />
-
-            </div>
-            
-            <motion.div 
-                className="absolute bottom-8 left-1/2 -translate-x-1/2 text-black/50 font-['Inter_Display']"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 1.5, duration: 1 }}
-            >
-                <p>Scroll down</p>
-            </motion.div>
->>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
         </section>
     );
 };

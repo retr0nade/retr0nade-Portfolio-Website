@@ -63,11 +63,7 @@ const Works: React.FC = () => {
     });
 
     return (
-<<<<<<< HEAD
         <section id="works" className="content-section">
-=======
-        <section id="works" className="py-20 md:py-32">
->>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
             <div className="max-w-7xl mx-auto px-4 text-center mb-16">
                 <h2 className="font-black text-6xl md:text-8xl tracking-tighter uppercase font-['Reddit_Sans_Condensed']">
                     My latest work
