@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SHREYAS DEB | Product & Web Design</title>
 
+<<<<<<< HEAD
     <!-- Tailwind CDN -->
+=======
+    <!-- Tailwind CDN (keeps utility classes available) -->
+>>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Fonts -->
@@ -15,6 +19,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@700&family=Inter+Tight:wght@500&display=swap" rel="stylesheet">
 
     <style data-framer-font-css="">
+<<<<<<< HEAD
       @font-face {
         font-family: "Reddit Sans Condensed";
         src: url("https://fonts.gstatic.com/s/redditsanscondensed/v5/m8J_jepOc6WYkkm2Dey9A5QGAQXmuL3va5IfZsq2gyKtWVJro_ANUpA4u7XDIuc.woff2");
@@ -145,11 +150,117 @@
       }
     </script>
   </head>
+=======
+      @font-face { font-family: "Reddit Sans Condensed"; src: url("https://fonts.gstatic.com/s/redditsanscondensed/v5/m8J_jepOc6WYkkm2Dey9A5QGAQXmuL3va5IfZsq2gyKtWVJro_ANUpA4u7XDIuc.woff2"); font-display: block; font-style: normal; font-weight: 900 }
+      @font-face { font-family: "Inter Display"; src: url("https://framerusercontent.com/assets/iwWTDc49ENF2tCHbqlNARXw6Ug.woff2"); font-display: swap; font-style: normal; font-weight: 500; unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2070, U+2074-207E, U+2080-208E, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD }
+    </style>
+
+    <!-- === IMPORTANT: plain CSS only (no @layer / @apply) === -->
+    <style>
+      /* Plain CSS background for hero; no Tailwind directives */
+      .bg-sunburst {
+        position: relative;
+        overflow: hidden;
+        background-color: #ffffff;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-blend-mode: screen;
+
+        /* Layered radial + linear gradients to form soft sunburst */
+        background-image:
+          radial-gradient(
+            circle at 6% 10%,
+            rgba(255, 255, 240, 0.95) 0%,
+            rgba(255, 245, 150, 0.75) 20%,
+            rgba(255, 235, 80, 0.55) 45%,
+            rgba(255, 220, 0, 0.25) 65%,
+            rgba(255, 220, 0, 0.05) 90%,
+            transparent 100%
+          ),
+          linear-gradient(45deg, rgba(255, 220, 0, 0.9) 0%, rgba(255, 220, 0, 0) 60%),
+          linear-gradient(65deg, rgba(255, 200, 0, 0.85) 0%, rgba(255, 200, 0, 0) 65%),
+          linear-gradient(80deg, rgba(255, 210, 0, 0.8) 0%, rgba(255, 210, 0, 0) 70%);
+        animation: sunPulse 10s ease-in-out infinite alternate;
+      }
+
+      @keyframes sunPulse {
+        0% { filter: brightness(1) saturate(1); }
+        100% { filter: brightness(1.08) saturate(1.12); }
+      }
+
+      .bg-sunburst::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(
+          circle at 10% 10%,
+          rgba(255, 255, 255, 0.3) 0%,
+          rgba(255, 255, 255, 0.05) 50%,
+          transparent 100%
+        );
+        mix-blend-mode: screen;
+        pointer-events: none;
+      }
+
+      /* Basic reset for body so it doesn't hide the hero */
+      body {
+        margin: 0;
+        overflow-x: hidden;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+    </style>
+
+<script>
+const forceEsmReact = {
+  "react": "https://esm.sh/react@18.3.1",
+  "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
+  "react/jsx-dev-runtime": "https://esm.sh/react@18.3.1/jsx-dev-runtime",
+  "react-dom": "https://esm.sh/react-dom@18.3.1",
+  "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
+  "framer-motion": "https://esm.sh/framer-motion@10.16.2?deps=react,react-dom"
+};
+
+(async () => {
+  // Wait for AI Studio to inject, then override.
+  await new Promise(r => setTimeout(r, 100));
+  const mapScript = document.querySelector('script[type="importmap"]');
+  if (mapScript) {
+    mapScript.textContent = JSON.stringify({ imports: forceEsmReact });
+    console.log("%c✅ Import map reset to esm.sh only", "color:limegreen;font-weight:bold");
+  }
+})();
+</script>
+
+
+
+
+
+  <link rel="stylesheet" href="/index.css">
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.24"
+  }
+}
+</script>
+</head>
+>>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
 
   <body>
     <div id="root"></div>
 
+<<<<<<< HEAD
     <!-- React app entry -->
     <script type="module" src="/index.tsx"></script>    
   </body>
 </html>
+=======
+    <!-- your app entry -->
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>
+>>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad

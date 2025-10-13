@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React from 'react';
 import { motion } from 'framer-motion';
+=======
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+>>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
 
 const SunIcon: React.FC = () => (
     <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,4 +45,8 @@ const Header: React.FC = () => {
     );
 };
 
+<<<<<<< HEAD
 export default Header;
+=======
+export default Header;
+>>>>>>> 82e8c5055700b777050e6a5e8e29eff3788563ad
