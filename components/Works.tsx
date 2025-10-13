@@ -9,15 +9,16 @@ interface Project {
   width: string;
   top: string;
   left: string;
+  link: string;
 }
 
 const projects: Project[] = [
-  { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: '/assets/work/cerebro.png', width: '55%', top: '-5%', left: '45%' },
-  { id: 'p2', title: 'BetterMaps', description: 'Optimized Google Maps', imageUrl: '/assets/work/bettermaps.png', width: '45%', top: '30%', left: '-5%' },
-  { id: 'p3', title: 'Abdominal Organ Segmentation', description: 'Machine Learning on medical dataset using MONAI', imageUrl: '/assets/work/AOS.png', width: '50%', top: '45%', left: '55%' },
-  { id: 'p4', title: 'Marketing Analytics', description: 'Trends, Graphs, Charts', imageUrl: '/assets/work/market_analytics.png', width: '55%', top: '80%', left: '-6.5%' },
-  { id: 'p5', title: 'AlgoViz', description: 'DSA Algorithm Visualizer', imageUrl: '/assets/work/dsa.png', width: '45%', top: '95%', left: '57%' },
-  { id: 'p6', title: 'DBMS.AI', description: 'Chatbot for DBMS', imageUrl: '/assets/work/dbms-ai.png', width: '60%', top: '127%', left: '-5%' }, 
+  { id: 'p1', title: 'Cerebro', description: 'AI-powered focus and burnout tracker', imageUrl: '/assets/work/cerebro.png', width: '55%', top: '-5%', left: '45%', link: 'https://github.com/retr0nade/CereBro-Digital-Burnout-Tracker'},
+  { id: 'p2', title: 'BetterMaps', description: 'Optimized Google Maps', imageUrl: '/assets/work/bettermaps.png', width: '45%', top: '30%', left: '-5%' , link: 'https://github.com/retr0nade/better-maps'},
+  { id: 'p3', title: 'Abdominal Organ Segmentation', description: 'Machine Learning on medical dataset using MONAI', imageUrl: '/assets/work/AOS.png', width: '50%', top: '45%', left: '55%' , link: 'https://github.com/retr0nade/Abdominal-Organ-Segmentation-Using-MONAI'},
+  { id: 'p4', title: 'Marketing Analytics', description: 'Trends, Graphs, Charts', imageUrl: '/assets/work/market_analytics.png', width: '55%', top: '80%', left: '-6.5%', link: 'https://admybrand-analytics-dashboard-iota.vercel.app/dashboard'},
+  { id: 'p5', title: 'AlgoViz', description: 'DSA Algorithm Visualizer', imageUrl: '/assets/work/dsa.png', width: '45%', top: '95%', left: '57%', link: 'https://github.com/retr0nade/DSA-Algorithm-Visualizer'},
+  { id: 'p6', title: 'DBMS.AI', description: 'Chatbot for DBMS', imageUrl: '/assets/work/dbms-ai.png', width: '60%', top: '127%', left: '-5%', link: 'https://github.com/retr0nade/DBMS-Chatbot'}, 
 ];
 
 const Works: React.FC = () => {
@@ -38,8 +39,11 @@ const Works: React.FC = () => {
         {projects.map((project) => {
           const randomRotation = useMemo(() => Math.random() * 4 - 2, []);
           return (
-            <motion.div
+            <motion.a
               key={project.id}
+              href={project.link}
+              target="_blank"
+              rel="noopener noreferrer"
               style={{
                 position: 'absolute',
                 width: project.width,
@@ -49,9 +53,9 @@ const Works: React.FC = () => {
               }}
               whileHover={{ rotate: 0, scale: 1.03, zIndex: 10 }}
               transition={{ type: 'spring', stiffness: 200, damping: 12 }}
-              className="group"
+              className="group block"
             >
-              <div className="shadow-2xl rounded-2xl md:rounded-3xl p-1 bg-white border-4 border-white transition-all">
+              <div className="shadow-2xl rounded-2xl md:rounded-3xl p-1 bg-white border-4 border-white transition-all cursor-pointer">
                 <img
                   src={project.imageUrl}
                   alt={project.title}
@@ -67,7 +71,7 @@ const Works: React.FC = () => {
                   {project.description}
                 </p>
               </div>
-            </motion.div>
+            </motion.a>
           );
         })}
       </div>
