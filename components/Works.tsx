@@ -22,7 +22,8 @@ const projects: Project[] = [
 
 const Works: React.FC = () => {
   return (
-    <section id="works" className="content-section relative min-h-[300vh] py-24 overflow-hidden bg-[#fffbea]">
+    <section id="works" className="content-section relative min-h-[330vh] py-24 overflow-hidden bg-[#fffbea]">
+      {/* Section Heading */}
       <div className="max-w-7xl mx-auto px-4 text-center mb-24">
         <h2 className="font-black text-6xl md:text-8xl tracking-tighter uppercase font-['Reddit_Sans_Condensed']">
           My latest work
@@ -32,6 +33,7 @@ const Works: React.FC = () => {
         </p>
       </div>
 
+      {/* Floating Projects */}
       <div className="relative w-full max-w-7xl mx-auto h-[150vh]">
         {projects.map((project) => {
           const randomRotation = useMemo(() => Math.random() * 4 - 2, []);
@@ -68,6 +70,19 @@ const Works: React.FC = () => {
             </motion.div>
           );
         })}
+      </div>
+
+      {/* Turtle Illustration + Text */}
+      <div className="flex flex-col items-center justify-center mt-[100vh] md:mt-[120vh] space-y-6">
+        <img
+          src="/assets/work/turtle.png"
+          alt="Turtle Cooking Projects"
+          className="w-40 h-40 opacity-90 drop-shadow-lg"
+        />
+        <p className="text-2xl md:text-3xl font-['Inter_Display'] text-black/60 text-center leading-snug">
+          COOKING MORE PROJECTS <br />
+          <span className="text-black font-semibold">SLOWLY BUT SURELY 😏</span>
+        </p>
       </div>
     </section>
   );
