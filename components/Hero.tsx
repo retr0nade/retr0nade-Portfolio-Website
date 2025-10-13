@@ -129,8 +129,23 @@ const Hero: React.FC = () => {
         const handleScroll = () => {
             if (sunburstRef.current) {
                 const scrollY = window.scrollY;
-                const scrollRotation = scrollY * -0.015;
-                sunburstRef.current.style.transform = `rotate(${scrollRotation}deg)`;
+
+                // 1. Inversed Rotation (as before)
+                const scrollRotation = scrollY * -0.01;
+                
+                // 2. Upward Movement (new)
+                const parallaxOffset = scrollY * -0.9; 
+
+                // 3. Subtle Zoom (new)
+                const scrollZoom = 1 + (scrollY * 0.0002);
+
+                // Combine all three effects
+                sunburstRef.current.style.transform = `
+                    translate(-50%, -50%) 
+                    translateY(${parallaxOffset}px) 
+                    rotate(${scrollRotation}deg) 
+                    scale(${scrollZoom})
+                `;
             }
         };
 

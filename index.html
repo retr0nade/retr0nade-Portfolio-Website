@@ -39,6 +39,7 @@
   }
 
   body {
+    position: relative;
     margin: 0;
     background: var(--bg);
     overflow-x: hidden;
@@ -51,7 +52,7 @@
     width: 100%;
     /* Set a min-height for the effect to be visible on scroll */
     min-height: 90vh; 
-    overflow: hidden;
+    
     isolation: isolate; 
     background-color: var(--bg);
   }
@@ -60,7 +61,7 @@
   .hero-content-wrapper {
     position: sticky;
     top: 0;
-    min-height: 100vh;
+    min-height: 140vh;
     display: flex;
     justify-content: center; /* Horizontally centers the content block */
     
@@ -75,22 +76,25 @@
 
 .sunburst {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vmax;
-  height: 50vmax;
+  top: 47%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   transform-origin: top left;
+  width: 110vmax;
+  height: 50vmax;
   
   background-image: url("/assets/sunburst/sunburst.png");
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: top left;  
-  /* Using a more reliable blend mode */
-  mix-blend-mode: multiply;
-  /* Adjusting filter and opacity to work with 'multiply' */
-  filter: saturate(1.5) contrast(1.1);
-  opacity: 0.75; /* 'multiply' is stronger, so we lower the opacity */
+  background-position: center;
 
+  /* --- ADD THIS LINE --- */
+  /* This creates the smooth animation between scroll positions */
+  transition: transform 0.7s ease-out;
+  
+  mix-blend-mode: multiply;
+  filter: saturate(1.5) contrast(1.1);
+  opacity: 1;
   pointer-events: none;
   z-index: 1;
 }
