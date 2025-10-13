@@ -1,59 +1,68 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const AnimatedWord: React.FC<{ children: React.ReactNode }> = ({ children }) => (
-  <span className="inline-block overflow-hidden">
-    <motion.span
-      className="inline-block"
-      initial={{ y: '100%' }}
-      whileInView={{ y: '0%' }}
-      viewport={{ once: true, amount: 0.8 }}
-      transition={{ duration: 0.8, ease: [0.25, 0.1, 0.25, 1] }}
-    >
-      {children}
-    </motion.span>
-  </span>
-);
+// --- FIX #2: INDIVIDUAL VERTICAL POSITION ---
+// Added a 'yPos' property to each milestone.
+// You can now edit this value for each icon individually.
+const milestones = [
+    { label: 'Python', iconUrl: '/assets/story/python.png', position: '13%', yPos: '-25%' },
+    { label: 'C++', iconUrl: '/assets/story/c++.png', position: '29%', yPos: '-25%' },
+    { label: 'DBMS', iconUrl: '/assets/story/dbms.png', position: '47%', yPos: '-25%' },
+    { label: 'Java', iconUrl: '/assets/story/java.png', position: '68%', yPos: '-25%' },
+    { label: 'Go', iconUrl: '/assets/story/go.png', position: '87%', yPos: '-25%' },
+];
 
 const Story: React.FC = () => {
-  return (
-    <section id="story" className="py-20 md:py-40 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-6xl md:text-8xl font-black font-['Reddit_Sans_Condensed'] uppercase tracking-tighter leading-none">
-          {'I don\'t have dark secrets, only bright ones'.split(' ').map((word, i) => (
-            <React.Fragment key={i}>
-              <AnimatedWord>{word}</AnimatedWord>{' '}
-            </React.Fragment>
-          ))}
-        </h2>
-        
-        <div className="grid md:grid-cols-2 gap-8 md:gap-16 mt-20">
-            <motion.div 
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.8, ease: "easeOut" }}
-                className="space-y-6 text-black/70 text-lg md:text-xl font-['Inter_Display']"
-            >
-                <p>
-                    Growing up, my journey into design started with pixels and passion. As a teen, retro games and early web sparked my visual storytelling passion, a computer science degree gave me a foundation, and product design showed new creative depths.
-                </p>
-                <p>
-                    Now, I partner up with dynamic founders reinventing tomorrow, from YC startups to enterprises. My mission: to craft unique, intelligent interfaces for AI, SaaS, and emerging tech.
-                </p>
-            </motion.div>
-            <motion.div
-                initial={{ opacity: 0, y: 50, scale: 0.9 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1 }}
-                viewport={{ once: true, amount: 0.5 }}
-                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-            >
-                <video src="https://framerusercontent.com/assets/dr1IAhMSSIk8zw4P6KIvDIM.mp4" loop autoPlay muted playsInline className="w-full rounded-2xl"></video>
-            </motion.div>
-        </div>
-      </div>
-    </section>
-  );
+    return (
+        <section id="story" className="content-section bg-white">
+            <div className="max-w-5xl mx-auto px-4">
+                
+                <motion.p 
+                    className="font-['Caveat'] text-2xl md:text-3xl text-black/50 text-center -rotate-3 mb-8"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.8 }}
+                    transition={{ duration: 0.8 }}
+                >
+                    Every experience in my life is important and has taught me a lot
+                </motion.p>
+
+                <motion.div 
+                    className="relative mt-40"
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 1, ease: "easeOut" }}
+                >
+                    {/* --- FIX #1: TIMELINE ROTATION --- */}
+                    {/* Added the 'rotate-1' class to slightly rotate the image clockwise. */}
+                    {/* You can change this to 'rotate-2' for more rotation, or '-rotate-1' for the other direction. */}
+                    <img src="/assets/story/timeline.png" alt="Timeline from 2020 to now" className="w-full rotate-2" />
+                    
+                    {milestones.map((milestone, index) => (
+                        <div
+                            key={index}
+                            className="absolute -translate-y-1/2 -translate-x-1/2 text-center"
+                            // The 'top' position is now dynamic, coming from the 'yPos' property
+                            style={{ left: milestone.position, top: milestone.yPos }}
+                        >
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.5 }}
+                                whileInView={{ opacity: 1, scale: 1 }}
+                                viewport={{ once: true, amount: 0.8 }}
+                                transition={{ duration: 0.6, delay: 0.2 + index * 0.1, ease: [0, 0, 0.2, 1] }}
+                            >
+                                <div className="bg-white/50 backdrop-blur-sm rounded-full p-2 w-20 h-20 md:w-28 md:h-28 flex items-center justify-center shadow-lg">
+                                    <img src={milestone.iconUrl} alt={milestone.label} className="w-12 h-12 md:w-16 md:h-16 object-contain" />
+                                </div>
+                                <p className="mt-2 text-sm md:text-base font-medium font-['Inter_Display'] text-black/60">{milestone.label}</p>
+                            </motion.div>
+                        </div>
+                    ))}
+                </motion.div>
+            </div>
+        </section>
+    );
 };
 
 export default Story;
