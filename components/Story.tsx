@@ -1,5 +1,8 @@
 import React, { useRef, useState, useEffect } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
+import { useAnimationFrame } from "framer-motion";
+import { RoughNotation } from "react-rough-notation";
+
 
 const milestones = [
     { label: 'Python', iconUrl: '/assets/story/python.png', position: '18%', yPos: '-25%' },
@@ -9,30 +12,64 @@ const milestones = [
     { label: 'Go', iconUrl: '/assets/story/go.png', position: '87%', yPos: '-25%' },
 ];
 
-const Polaroid: React.FC<{ src: string, caption: string, rotation: string, yRange: [string, string], scrollProgress: any }> = ({ src, caption, rotation, yRange, scrollProgress }) => {
-    const y = useTransform(scrollProgress, [0, 1], yRange);
-    return (
-        <motion.div
-            className="p-2 md:p-4 bg-white shadow-xl absolute"
-            style={{ y, rotate: rotation }}
-        >
-            <img src={src} alt={caption} className="w-full h-auto" />
-            <p className="font-['Caveat'] text-center text-lg md:text-xl mt-2">{caption}</p>
-        </motion.div>
-    );
+const Polaroid: React.FC<{
+  src: string;
+  caption: string;
+  rotation: string;
+  yRange: [string, string];
+  scrollProgress: any;
+}> = ({ src, caption, rotation, yRange, scrollProgress }) => {
+  const y = useTransform(scrollProgress, [0, 1], yRange);
+
+  return (
+    <motion.div
+      className="absolute bg-white shadow-2xl rounded-md flex flex-col items-center
+                 p-4 border border-neutral-300 select-none"
+      style={{
+        y,
+        rotate: rotation,
+        width: "300px",
+        height: "350px",
+      }}
+      whileHover={{ scale: 1.05, y: -10 }}
+      transition={{ type: "spring", stiffness: 120 }}
+    >
+      <img
+        src={src}
+        alt={caption}
+        className="w-[270px] h-[270px] object-cover rounded-sm shadow-md"
+      />
+
+      {/* ✨ Hand-drawn underline / circle on caption */}
+      <RoughNotation
+        type="underline"
+        show
+        color="#facc15"                // warm yellow
+        padding={5}
+        strokeWidth={2}
+        animationDelay={500}
+        animationDuration={1200}
+      >
+        <p className="font-['Caveat'] text-center text-lg md:text-xl mt-3 text-black/70 tracking-wide">
+          {caption}
+        </p>
+      </RoughNotation>
+    </motion.div>
+  );
 };
+
 
 const PolaroidSlideshow: React.FC<{ scrollProgress: any }> = ({ scrollProgress }) => {
   const images = [
-    { src: '/assets/story/gaming.jpg', caption: 'Gaming was life' },
-    { src: '/assets/story/code.jpg', caption: 'Coding became my passion' },
-    { src: '/assets/story/night.jpg', caption: 'Night owl coding sessions' },
-    { src: '/assets/story/retro.jpg', caption: 'Tech fascination' },
+    { src: '/assets/story/gaming.png', caption: 'Gaming was life', tilt: -4 },
+    { src: '/assets/story/code.png', caption: 'Coding became my passion', tilt: 3 },
+    { src: '/assets/story/night.png', caption: 'Night owl coding sessions', tilt: -2 },
+    { src: '/assets/story/retro.png', caption: 'Tech fascination', tilt: 1 },
   ];
 
   const [index, setIndex] = useState(0);
 
-  // Auto-rotate every 4s
+  // Change slide every 4s
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % images.length);
@@ -41,26 +78,26 @@ const PolaroidSlideshow: React.FC<{ scrollProgress: any }> = ({ scrollProgress }
   }, [images.length]);
 
   return (
-        <div className="relative w-full h-full overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={images[index].src}
-              className="absolute inset-0 flex flex-col items-center justify-center"
-              initial={{ opacity: 0, scale: 1.05 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 1 }}
-            >
-              <Polaroid
-                src={images[index].src}
-                caption={images[index].caption}
-                rotation="0deg"
-                yRange={['0%', '0%']}
-                scrollProgress={scrollProgress}
-              />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+    <div className="relative w-full h-full overflow-hidden">
+      <AnimatePresence mode="wait" custom={index}>
+        <motion.div
+          key={images[index].src}
+          className="absolute inset-0 flex flex-col items-center justify-center"
+          initial={{ x: 200, opacity: 0 }}     // 🡒 starts off to the right
+          animate={{ x: 0, opacity: 1 }}        // 🡒 slides to center
+          exit={{ x: -200, opacity: 0 }}        // 🡒 slides out to the left
+          transition={{ duration: 1, ease: "easeInOut" }}
+        >
+          <Polaroid
+            src={images[index].src}
+            caption={images[index].caption}
+            rotation={`${images[index].tilt}deg`}
+            yRange={['0%', '0%']}
+            scrollProgress={scrollProgress}
+          />
+        </motion.div>
+      </AnimatePresence>
+    </div>
   );
 };
 
