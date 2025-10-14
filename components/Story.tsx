@@ -162,7 +162,7 @@ const Story: React.FC = () => {
                     initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
                     viewport={{ once: true, amount: 0.8 }} transition={{ duration: 1 }}
                 >
-                    No dark secrets
+                    No dark secrets,
                 </motion.h2>
 
                 <motion.h3
@@ -249,7 +249,7 @@ const Story: React.FC = () => {
                   transition={{ duration: 0.8 }}
                 >
                   <motion.img
-                    src="/assets/story/placeholder.gif"
+                    src="/assets/story/rocket.gif"
                     alt="Showcase GIF"
                     className="w-full rounded-2xl"
                     initial={{ opacity: 0, scale: 0.9 }}
