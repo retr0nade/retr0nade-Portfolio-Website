@@ -22,11 +22,9 @@ const SocialIcon: React.FC<{ href: string; children: React.ReactNode }> = ({ hre
 );
 
 const socialLinks = [
-    { name: 'GitHub', href: 'https://github.com', img: 'https://framerusercontent.com/images/8yvYtcx3cfJFOTpz7A4hI9AtiI.png' },
-    { name: 'Instagram', href: 'https://instagram.com', img: 'https://framerusercontent.com/images/qyHjNFaKZK3J0IgI963dEUUJ4.png' },
-    { name: 'Dribbble', href: 'https://dribbble.com', img: 'https://framerusercontent.com/images/uMA164Althqj1b2vXygS2wyBIgQ.png' },
-    { name: 'Threads', href: 'https://threads.net', img: 'https://framerusercontent.com/images/23QIkTXJxWXuDvTC7jrVLxmu5cA.png' },
-    { name: 'LinkedIn', href: 'https://linkedin.com', img: 'https://framerusercontent.com/images/RYuwqCxHlxrSfIOO7JZreY9YX9Q.png' },
+    { name: 'GitHub', href: 'https://github.com/retr0nade', img: '/assets/footer/github.png' },
+    { name: 'Instagram', href: 'https://instagram.com/shreyasdeb', img: 'https://framerusercontent.com/images/qyHjNFaKZK3J0IgI963dEUUJ4.png' },
+    { name: 'LinkedIn', href: 'https://www.linkedin.com/in/shreyas-deb-73a090295', img: 'https://framerusercontent.com/images/RYuwqCxHlxrSfIOO7JZreY9YX9Q.png' },
 ];
 
 const Footer: React.FC = () => {
@@ -35,10 +33,10 @@ const Footer: React.FC = () => {
             <div className="max-w-6xl mx-auto">
                 <div className="flex flex-col md:flex-row items-center justify-between gap-8">
                     <div className="text-center md:text-left">
-                        <a href="mailto:hello@shreyasdeb.space" className="font-medium text-xl md:text-2xl font-['Inter_Display'] text-black hover:text-black/70 transition-colors">
-                            hello@shreyasdeb.space
+                        <a href="mailto:shreyasdeb@gmail.com" className="font-medium text-xl md:text-2xl font-['Inter_Display'] text-black hover:text-black/70 transition-colors">
+                            hello@shreyasdeb
                         </a>
-                        <p className="text-black/50 mt-2 font-['Inter_Display']">© 2025 SHREYAS DEB. Crafted with vibe-coding ⚡</p>
+                        <p className="text-black/50 mt-2 font-['Inter_Display']">© 2025 SHREYAS DEB. Crafted with LOVE and ENTHUSIASM ⚡</p>
                     </div>
                     <div className="flex items-center justify-center gap-2 md:gap-4">
                         {socialLinks.map(link => (
