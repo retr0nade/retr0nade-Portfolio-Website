@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import React, { useRef, useState, useEffect } from 'react';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 
 const milestones = [
     { label: 'Python', iconUrl: '/assets/story/python.png', position: '18%', yPos: '-25%' },
@@ -21,6 +21,49 @@ const Polaroid: React.FC<{ src: string, caption: string, rotation: string, yRang
         </motion.div>
     );
 };
+
+const PolaroidSlideshow: React.FC<{ scrollProgress: any }> = ({ scrollProgress }) => {
+  const images = [
+    { src: '/assets/story/gaming.jpg', caption: 'Gaming was life' },
+    { src: '/assets/story/code.jpg', caption: 'Coding became my passion' },
+    { src: '/assets/story/night.jpg', caption: 'Night owl coding sessions' },
+    { src: '/assets/story/retro.jpg', caption: 'Tech fascination' },
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  // Auto-rotate every 4s
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setIndex((prev) => (prev + 1) % images.length);
+    }, 4000);
+    return () => clearInterval(timer);
+  }, [images.length]);
+
+  return (
+        <div className="relative w-full h-full overflow-hidden">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={images[index].src}
+              className="absolute inset-0 flex flex-col items-center justify-center"
+              initial={{ opacity: 0, scale: 1.05 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 1 }}
+            >
+              <Polaroid
+                src={images[index].src}
+                caption={images[index].caption}
+                rotation="0deg"
+                yRange={['0%', '0%']}
+                scrollProgress={scrollProgress}
+              />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+  );
+};
+
 
 const Story: React.FC = () => {
     const parallaxRef = useRef(null);
@@ -148,21 +191,9 @@ const Story: React.FC = () => {
                   transition={{ duration: 0.8 }}
                 >
                   <div ref={parallaxRef} className="relative w-full h-full">
-                    <Polaroid
-                      src="/assets/story/placeholder-1.jpg"
-                      caption="Scribbles on the wall"
-                      rotation="-6deg"
-                      yRange={['30%', '-30%']}
-                      scrollProgress={scrollYProgress}
-                    />
-                    <Polaroid
-                      src="/assets/story/placeholder-2.jpg"
-                      caption="Another memory"
-                      rotation="8deg"
-                      yRange={['-15%', '15%']}
-                      scrollProgress={scrollYProgress}
-                    />
+                    <PolaroidSlideshow scrollProgress={scrollYProgress} />
                   </div>
+
                 </motion.div>
 
 
