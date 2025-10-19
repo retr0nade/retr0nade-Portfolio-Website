@@ -110,7 +110,7 @@ const Story: React.FC = () => {
     });
 
     return (
-        <section id="story" className="content-section bg-white relative min-h-[3000px] overflow-hidden">
+        <section id="story" className="content-section bg-white relative min-h-[2300px] overflow-hidden">
             <div className="max-w-5xl mx-auto px-4 relative">
 
                 {/* --- FLOATING QUOTE --- */}
