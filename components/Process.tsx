@@ -195,7 +195,7 @@ const Process = () => {
       </motion.section>
 
       {/* --- TERMINAL & OUTRO SECTION --- */}
-      {/* INCREASED HEIGHT: From 200vh to 300vh for more scroll room */}
+      {/* INCREASED HEIGHT: From 200vh to 500vh for more scroll room */}
       <motion.section ref={outroRef} style={{ backgroundColor: outroBgColor }} className="relative h-[500vh]">
         <div className="sticky top-0 flex h-screen w-full items-center justify-center overflow-hidden">
           {/* Main Content (Terminal + Images) */}
